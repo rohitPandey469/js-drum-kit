@@ -4,6 +4,9 @@ window.onload = function settingKeysTransition() {
   keys.forEach((key) =>
     key.addEventListener("transitionend", removeTransition)
   );
+    keys.forEach((key) => {
+    key.addEventListener("click", clicked);
+  });
 };
 
 window.addEventListener("keydown", function (e) {
@@ -25,4 +28,11 @@ function playAudio(audio, key) {
 function removeTransition(e) {
   if (e.propertyName !== "transform") return;
   this.classList.remove("playing");
+}
+function clicked() {
+  // console.log(this.dataset.key);
+  const audio = document.querySelector(`audio[data-key="${this.dataset.key}"]`);
+  const key = document.querySelector(`.key[data-key="${this.dataset.key}"]`);
+  if (!audio) return;
+  else playAudio(audio, key);
 }
